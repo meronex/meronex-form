@@ -1,17 +1,18 @@
 # Meronex Form
 
-## Dead simple react form validation with React MUI.
+## A very simple React forms validation for React MUI.
 
 _Note that this an early version and still being tested_
 
 ## Usage
 
-1.  Import the library `import Form from '@meronex/form';`
+1. Install **`npm i @meronex/form`**
+3. Import `import Form from '@meronex/form';`
 
-2.  Add the parent form
+2.  Add the form
     `<Form ref={validatedForm} onUpdate={(_formData) => { setFormData(_formData); }}> ... React MUI Fields Here </Form`
 
-        Notice that we've a **`ref`** attached which exposes a **`validatedForm.reset(`**) method and we've an **`onUpdate`** method which is triggered every time there change to the form.
+     Notice that we've a **`ref`** attached which exposes a **`validatedForm.reset(`**) method and we've an **`onUpdate`** method which is triggered every time        there change to the form.
 
 3.  Add the @material-ui fields with name, defaultValue and validator attribute.
 
@@ -24,6 +25,7 @@ _Note that this an early version and still being tested_
 1. Minmal and dead-simple API
 2. Minimal documentation/concepts
 3. Easy to fork and modify
+4. No dependiences
 
 ## How it works?
 
