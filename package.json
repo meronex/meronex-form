@@ -1,0 +1,31 @@
+{
+	"name": "@meronex/form",
+	"version": "1.0.2",
+	"description": "A simple react form validation component for MUI React  (and potential other)",
+	"main": "index.js",
+	"module": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"form",
+		"forms",
+		"form-validation",
+		"react",
+		"react-component",
+		"context",
+		"component",
+		"validation",
+		"formik",
+		"formstate",
+		"material-ui",
+		"mui",
+		"material"
+	],
+	"author": "meronex",
+	"license": "MIT",
+	"dependencies": {},
+	"peerDependencies": {
+		"react": "^16.3.0 || ^17"
+	}
+}
