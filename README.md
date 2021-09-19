@@ -2,10 +2,18 @@
 
 ## A very simple React forms validation for React MUI.
 
-_Note that this an early version and still being tested_
+
+🚧 Note that this an early version and still being tested_
+
+![demo](https://merobase-photos.s3-eu-west-2.amazonaws.com/nQEPuETDDvaNFBm6w/m_form.gif)
+
+## Features
+
+- Validate onBlur or onChange
+- Same API for classes and functional components 
+- Easy to fork and modify to your needs
 
 ## Usage
-
 1. Install **`npm i @meronex/form`**
 3. Import `import Form from '@meronex/form';`
 
@@ -18,14 +26,17 @@ _Note that this an early version and still being tested_
 
     `<TextField name={'name'} label="Name" defaultValue={'a'} validate={(v) => { if (!v || v === '') return 'Name is required..!!'; return true; }} />`
 
-    And that's it! The onUpdate will be triggered with all the form data and you can then set it to the state object.
+    That's it! The onUpdate will be triggered with all the form data, you can then set it to the state object.
 
 ## Why?
 
-1. Minmal and dead-simple API
+I wanted a validation component for few inputs I have, and I found
+the existing libraries to be either too complex or too rigid for my use case.
+
+1. Minimal and dead-simple API
 2. Minimal documentation/concepts
 3. Easy to fork and modify
-4. No dependiences
+4. No dependencies
 
 ## How it works?
 
