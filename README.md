@@ -3,7 +3,7 @@
 ## A very simple React forms validation for React MUI.
 
 
-🚧 Note that this an early version and still being tested_
+🚧 Note that this an early version and still being tested, feel free to open any issue_
 
 ![demo](https://merobase-photos.s3-eu-west-2.amazonaws.com/nQEPuETDDvaNFBm6w/m_form.gif)
 
@@ -41,3 +41,8 @@ the existing libraries to be either too complex or too rigid for my use case.
 ## How it works?
 
 The Form component will bind methods/props to the child fields. The `value, onBlur, onChange, error and helperText` props are automatically handled, a form object is created to capture the state of the form and that object is passed to the onUpdate method with every change.
+
+
+## Other libraries
+
+- Looking for React Icons? try [Meronex Icons](https://icons.meronex.com/)
