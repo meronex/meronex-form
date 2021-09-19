@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export class FormClass {
   constructor(config, onUpdateFun) {
@@ -41,7 +41,7 @@ export class FormClass {
     let isValid;
     let validCount = 0;
     Object.values(this.data.errors).forEach((v) => {
-      if (typeof v === "string") {
+      if (typeof v === 'string') {
         isValid = false;
       }
       if (v === true) {
@@ -63,7 +63,7 @@ export class FormClass {
     let error = {},
       state = {};
 
-    if (fieldConfig && typeof fieldConfig.validate === "function") {
+    if (fieldConfig && typeof fieldConfig.validate === 'function') {
       error = fieldConfig.validate(this.data.values[f]);
       state = Boolean(error);
     }
@@ -79,7 +79,7 @@ export class FormClass {
     return this.data.values[f];
   }
   isFieldValid(f) {
-    return typeof this.data.errors[f] === "string";
+    return typeof this.data.errors[f] === 'string';
   }
 
   getError(f) {
@@ -133,7 +133,7 @@ export const Form = React.forwardRef((props, ref) => {
 
   const form = React.useRef(new FormClass({}, onUpdate)).current;
 
-  if (typeof onUpdate === "function") {
+  if (typeof onUpdate === 'function') {
     form.onUpdateFunc = onUpdate;
   }
 
@@ -164,7 +164,7 @@ export const Form = React.forwardRef((props, ref) => {
       if (!form.config.validatorsCount) {
         form.config.validatorsCount = 0;
       }
-      if (name && typeof validate === "function") {
+      if (name && typeof validate === 'function') {
         if (!form.config[name]) {
           form.config[name] = {};
         }
@@ -176,7 +176,7 @@ export const Form = React.forwardRef((props, ref) => {
         }
       }
       let childProps =
-        typeof name !== "undefined"
+        typeof name !== 'undefined'
           ? {
               key: i,
               validate: undefined,
@@ -187,7 +187,7 @@ export const Form = React.forwardRef((props, ref) => {
               },
               onBlur: () => form.onBlur(name),
               helperText: React.createElement(
-                "span",
+                'span',
                 null,
                 form.getError(name)
               ),
