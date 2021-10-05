@@ -43,8 +43,7 @@ export class FormClass {
     Object.values(this.data.errors).forEach((v) => {
       if (typeof v === "string") {
         isValid = false;
-      }
-      if (v === true) {
+      } else if (v === true) {
         validCount += 1;
       }
     });
@@ -127,7 +126,7 @@ export const FormField = (props) => {
 };
 
 export const Form = React.forwardRef((props, ref) => {
-  const { children, onUpdate } = props;
+  const { onUpdate } = props;
 
   const [initialized, setInitialized] = React.useState(false);
 
@@ -153,6 +152,7 @@ export const Form = React.forwardRef((props, ref) => {
       form.validate();
     },
   }));
+  let children = React.Children.toArray(props.children);
 
   return React.createElement(
     React.Fragment,
@@ -169,10 +169,12 @@ export const Form = React.forwardRef((props, ref) => {
           form.config[name] = {};
         }
         form.config[name].validate = c.props.validate;
-        if (!initialized && c.props.defaultValue) {
+        if (!initialized) {
           form.config.validatorsCount += 1;
-          form.data.values[name] = c.props.defaultValue;
-          form.config[name].defaultValue = c.props.defaultValue;
+          if (c.props.defaultValue) {
+            form.data.values[name] = c.props.defaultValue;
+            form.config[name].defaultValue = c.props.defaultValue;
+          }
         }
       }
       let childProps =

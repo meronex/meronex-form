@@ -1,6 +1,6 @@
 {
 	"name": "@meronex/form",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "A dead simple react form validation component for MUI React (and potential other)",
 	"main": "index.js",
 	"module": "index.js",
