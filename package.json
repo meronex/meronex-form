@@ -1,10 +1,11 @@
 {
 	"name": "@meronex/form",
-	"version": "1.0.4",
-	"description": "A dead simple react form validation component for MUI React (and potential other)",
+	"version": "1.0.6",
+	"description": "Very simple react form validation component for React Material UI (and potential other)",
 	"main": "index.js",
 	"module": "index.js",
 	"scripts": {
+		"public": "npm publish --access public",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -25,7 +26,8 @@
 		"formstate",
 		"material-ui",
 		"mui",
-		"material"
+		"material",
+		"meronex"
 	],
 	"author": "meronex",
 	"license": "MIT",
