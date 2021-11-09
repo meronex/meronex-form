@@ -157,25 +157,33 @@ export const Form = React.forwardRef((props, ref) => {
     React.Fragment,
     null,
     children.map((c, i) => {
+      console.log(c);
       const name = c.props.name;
       const validate = c.props.validate;
 
       if (!form.config.validatorsCount) {
         form.config.validatorsCount = 0;
       }
-      if (name && typeof validate === "function") {
+      if (name) {
         if (!form.config[name]) {
           form.config[name] = {};
         }
-        form.config[name].validate = c.props.validate;
+
         if (!initialized) {
-          form.config.validatorsCount += 1;
+          if (typeof validate === "function") {
+            form.config[name].validate = c.props.validate;
+            form.config.validatorsCount += 1;
+          }
+
           if (c.props.defaultValue) {
             form.data.values[name] = c.props.defaultValue;
             form.config[name].defaultValue = c.props.defaultValue;
+          } else if (c.props.value) {
+            form.data.values[name] = c.props.value;
           }
         }
       }
+      console.log(form.getData());
       let childProps =
         typeof name !== "undefined"
           ? {
