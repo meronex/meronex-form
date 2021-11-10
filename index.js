@@ -157,7 +157,6 @@ export const Form = React.forwardRef((props, ref) => {
     React.Fragment,
     null,
     children.map((c, i) => {
-      console.log(c);
       const name = c.props.name;
       const validate = c.props.validate;
 
@@ -183,7 +182,6 @@ export const Form = React.forwardRef((props, ref) => {
           }
         }
       }
-      console.log(form.getData());
       let childProps =
         typeof name !== "undefined"
           ? {
