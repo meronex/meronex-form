@@ -187,8 +187,8 @@ export const Form = React.forwardRef((props, ref) => {
           ? {
               key: i,
               validate: undefined,
-              defaultValue: undefined,
-              value: form.getData().values[(c, name)],
+              defaultValue: c.props.defaultValue,
+              value: c.props.value,
               onChange: (e) => {
                 form.onChange(name, e.target.value);
               },
