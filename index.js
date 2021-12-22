@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export class FormClass {
   constructor(config, onUpdateFun) {
@@ -41,7 +41,7 @@ export class FormClass {
     let isValid;
     let validCount = 0;
     Object.values(this.data.errors).forEach((v) => {
-      if (typeof v === 'string') {
+      if (typeof v === "string") {
         isValid = false;
       } else if (v === true) {
         validCount += 1;
@@ -61,7 +61,7 @@ export class FormClass {
     let error = false,
       state = {};
 
-    if (fieldConfig && typeof fieldConfig.validate === 'function') {
+    if (fieldConfig && typeof fieldConfig.validate === "function") {
       error = fieldConfig.validate(this.data.values[f]);
       state = Boolean(error);
     }
@@ -77,7 +77,7 @@ export class FormClass {
     return this.data.values[f];
   }
   isFieldValid(f) {
-    return typeof this.data.errors[f] === 'string';
+    return typeof this.data.errors[f] === "string";
   }
 
   getError(f) {
@@ -131,7 +131,7 @@ export const Form = React.forwardRef((props, ref) => {
 
   const form = React.useRef(new FormClass({}, onUpdate)).current;
 
-  if (typeof onUpdate === 'function') {
+  if (typeof onUpdate === "function") {
     form.onUpdateFunc = onUpdate;
   }
 
@@ -157,8 +157,16 @@ export const Form = React.forwardRef((props, ref) => {
     React.Fragment,
     null,
     children.map((c, i) => {
-      const name = c.props.name;
-      const validate = c.props.validate;
+      if (!React.isValidElement(c)) {
+        return;
+      }
+      let name, validate, defaultValue, value;
+      if (c.props) {
+        name = c.props.name;
+        validate = c.props.validate;
+        defaultValue = c.props.defaultValue;
+        value = c.props.value;
+      }
 
       if (!form.config.validatorsCount) {
         form.config.validatorsCount = 0;
@@ -169,32 +177,32 @@ export const Form = React.forwardRef((props, ref) => {
         }
 
         if (!initialized) {
-          if (typeof validate === 'function') {
+          if (typeof validate === "function") {
             form.config[name].validate = c.props.validate;
             form.config.validatorsCount += 1;
           }
 
-          if (c.props.defaultValue) {
-            form.data.values[name] = c.props.defaultValue;
-            form.config[name].defaultValue = c.props.defaultValue;
-          } else if (c.props.value) {
-            form.data.values[name] = c.props.value;
+          if (defaultValue) {
+            form.data.values[name] = defaultValue;
+            form.config[name].defaultValue = defaultValue;
+          } else if (value) {
+            form.data.values[name] = value;
           }
         }
       }
       let childProps =
-        typeof name !== 'undefined'
+        typeof name !== "undefined"
           ? {
               key: i,
               validate: undefined,
-              defaultValue: c.props.defaultValue,
-              value: c.props.value,
+              defaultValue,
+              value,
               onChange: (e) => {
                 form.onChange(name, e.target.value);
               },
               onBlur: () => form.onBlur(name),
               helperText: React.createElement(
-                'span',
+                "span",
                 null,
                 form.getError(name)
               ),
