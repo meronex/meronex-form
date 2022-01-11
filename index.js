@@ -141,6 +141,7 @@ export const Form = React.forwardRef((props, ref) => {
       form.validate(v[0]);
     });
     setInitialized(true);
+    return () => form.reset();
   }, []);
 
   React.useImperativeHandle(ref, () => ({
