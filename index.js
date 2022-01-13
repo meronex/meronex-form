@@ -1,8 +1,9 @@
 import React from "react";
 
 export class FormClass {
-  constructor(config, onUpdateFun) {
+  constructor(config, onUpdateFun, blurDelay) {
     this.onUpdateFunc = onUpdateFun;
+    this.blurDelay = blurDelay;
     this.init(config);
     this.isFormValid();
   }
@@ -34,7 +35,6 @@ export class FormClass {
     this.data.state = state;
     this.data.values = values;
     this.data.errors = errors;
-
     this.data.state.formValid = undefined;
   }
   isFormValid() {
@@ -53,7 +53,9 @@ export class FormClass {
     return isValid;
   }
   onBlur(f) {
-    this.validate(f);
+    setTimeout(() => {
+      this.validate(f);
+    }, this.blurDelay);
   }
 
   validate(f) {
@@ -92,7 +94,7 @@ export class FormClass {
   }
 
   reset() {
-    this.init(this.config);
+    this.init({});
     if (this.onUpdateFunc) {
       this.onUpdateFunc({ ...this.data });
     }
@@ -125,11 +127,11 @@ export const FormField = (props) => {
 };
 
 export const Form = React.forwardRef((props, ref) => {
-  const { onUpdate } = props;
+  const { onUpdate, blurDelay = 0 } = props;
 
   const [initialized, setInitialized] = React.useState(false);
 
-  const form = React.useRef(new FormClass({}, onUpdate)).current;
+  const form = React.useRef(new FormClass({}, onUpdate, blurDelay)).current;
 
   if (typeof onUpdate === "function") {
     form.onUpdateFunc = onUpdate;

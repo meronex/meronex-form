@@ -1,6 +1,6 @@
 {
 	"name": "@meronex/form",
-	"version": "1.0.12",
+	"version": "1.0.13",
 	"description": "Very simple react form validation component for React Material UI (and potential other)",
 	"main": "index.js",
 	"module": "index.js",
