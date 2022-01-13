@@ -54,7 +54,7 @@ export class FormClass {
   }
   onBlur(f) {
     setTimeout(() => {
-      this.validate(f);
+      this.onChange(f, this.data.values[f]);
     }, this.blurDelay);
   }
 
@@ -72,7 +72,6 @@ export class FormClass {
     const _isFormValid = this.isFormValid();
     this.data.state.formValid = _isFormValid;
     this.data.isValid = _isFormValid;
-    this.onUpdateFunc(this.data);
     return this.getData();
   }
   getValue(f) {
@@ -86,18 +85,19 @@ export class FormClass {
     return this.data.errors[f];
   }
   onChange(f, v) {
-    this.data.values[f] = v;
-    this.validate(f);
+    if (f) {
+      this.data.values[f] = v;
+      this.validate(f);
+    }
+
     if (this.onUpdateFunc) {
       this.onUpdateFunc({ ...this.data });
     }
   }
 
   reset() {
-    this.init({});
-    if (this.onUpdateFunc) {
-      this.onUpdateFunc({ ...this.data });
-    }
+    this.init(this.config);
+    this.onChange();
   }
   getData() {
     return { ...this.data };
@@ -127,8 +127,7 @@ export const FormField = (props) => {
 };
 
 export const Form = React.forwardRef((props, ref) => {
-  const { onUpdate, blurDelay = 0 } = props;
-
+  const { onUpdate, blurDelay = 0, validateOnInit = false } = props;
   const [initialized, setInitialized] = React.useState(false);
 
   const form = React.useRef(new FormClass({}, onUpdate, blurDelay)).current;
@@ -139,9 +138,13 @@ export const Form = React.forwardRef((props, ref) => {
 
   React.useEffect(() => {
     const valuesArray = Object.entries(form.data.values);
-    valuesArray.forEach((v) => {
-      form.validate(v[0]);
-    });
+
+    if (validateOnInit) {
+      valuesArray.forEach((v) => {
+        form.validate(v[0]);
+      });
+    }
+
     setInitialized(true);
     return () => form.reset();
   }, []);
@@ -190,6 +193,10 @@ export const Form = React.forwardRef((props, ref) => {
             form.config[name].defaultValue = defaultValue;
           } else if (value) {
             form.data.values[name] = value;
+            form.config[name].defaultValue = undefined;
+          } else {
+            form.data.values[name] = undefined;
+            form.config[name].defaultValue = undefined;
           }
         }
       }
