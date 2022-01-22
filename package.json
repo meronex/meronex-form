@@ -31,9 +31,7 @@
 	],
 	"author": "meronex",
 	"license": "MIT",
-	"dependencies": {
-		"@mui/lab": "^5.0.0-alpha.61"
-	},
+	"dependencies": {},
 	"peerDependencies": {
 		"react": "^16.3.0 || ^17"
 	}
