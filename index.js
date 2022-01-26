@@ -52,10 +52,34 @@ export class FormClass {
     }
     return isValid;
   }
+  isFieldValid(f) {
+    return typeof this.data.errors[f] === "string";
+  }
+
   onBlur(f) {
-    setTimeout(() => {
+    this.blurTimeout = setTimeout(() => {
       this.onChange(f, this.data.values[f]);
     }, this.blurDelay);
+  }
+  onChange(f, v) {
+    if (f) {
+      this.data.values[f] = v;
+      this.validate(f);
+    }
+
+    if (this.onUpdateFunc) {
+      this.onUpdateFunc({ ...this.data });
+    }
+  }
+
+  getValue(f) {
+    return this.data.values[f];
+  }
+  getError(f) {
+    return this.data.errors[f];
+  }
+  getData() {
+    return { ...this.data };
   }
 
   validate(f) {
@@ -74,33 +98,12 @@ export class FormClass {
     this.data.isValid = _isFormValid;
     return this.getData();
   }
-  getValue(f) {
-    return this.data.values[f];
-  }
-  isFieldValid(f) {
-    return typeof this.data.errors[f] === "string";
-  }
-
-  getError(f) {
-    return this.data.errors[f];
-  }
-  onChange(f, v) {
-    if (f) {
-      this.data.values[f] = v;
-      this.validate(f);
-    }
-
-    if (this.onUpdateFunc) {
-      this.onUpdateFunc({ ...this.data });
-    }
-  }
-
-  reset() {
+  reset(fireOnChange = true) {
     this.init(this.config);
-    this.onChange();
-  }
-  getData() {
-    return { ...this.data };
+    window.clearTimeout(this.blurTimeout);
+    if (fireOnChange) {
+      this.onChange();
+    }
   }
 
   static init(config, cb) {
@@ -146,7 +149,7 @@ export const Form = React.forwardRef((props, ref) => {
     }
 
     setInitialized(true);
-    return () => form.reset();
+    return () => form.reset(false);
   }, []);
 
   React.useImperativeHandle(ref, () => ({
@@ -187,7 +190,6 @@ export const Form = React.forwardRef((props, ref) => {
             form.config[name].validate = c.props.validate;
             form.config.validatorsCount += 1;
           }
-
           if (defaultValue) {
             form.data.values[name] = defaultValue;
             form.config[name].defaultValue = defaultValue;
