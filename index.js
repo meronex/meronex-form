@@ -146,9 +146,11 @@ export const Form = React.forwardRef((props, ref) => {
       valuesArray.forEach((v) => {
         form.validate(v[0]);
       });
+      form.onChange();
     }
 
     setInitialized(true);
+
     return () => form.reset(false);
   }, []);
 
